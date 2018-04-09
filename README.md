@@ -12,4 +12,4 @@ Run `pwm_reader.ino` with Arduino IDE after following connection 2.
 
 
 ### TODO
-[ ] Link servo logic with reciever.
+- [] Link servo logic with reciever.
