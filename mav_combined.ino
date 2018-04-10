@@ -40,6 +40,5 @@ void flap(int delay_) {
 int throttleLevel(double channel) {
   int throttle_l = 0;
   throttle_l = map(channel, 1000, 2000, -5, -2);
-  throttle_l*=-1;
-  return throttle_l;
+  return abs(throttle_l);
 }
