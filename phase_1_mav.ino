@@ -16,18 +16,18 @@ int throttle_level;
 void setup() {
   pinMode(3, INPUT);  //  throttle logic, channel_3 >> pin_3 uc
   pinMode(4, INPUT);  //  rudder logic, channel_1 >> pin_4 uc
-  left_servo.attach(9);  //servo signal line >> pin_9 
-  right_servo.attach(10);  //servo signal line >> pin_10
-  rudder_servo.attach(11);  //sevo signal line >> pin_11
-  left_servo.write(0);  
-  right_servo.write(180);   
+  left_servo.attach(11);  //servo signal line >> pin_11 (orange)
+  right_servo.attach(12);  //servo signal line >> pin_12 (blue)
+  rudder_servo.attach(4);  //sevo signal line >> pin_9
+  left_servo.write(0);
+  right_servo.write(180);
   rudder_servo.write(15);
   Serial.begin(9600);
 }
 
 void loop() {
   // Throttle logic
-  channel_3 = pulseIn(3, HIGH);
+  channel_3 = pulseIn(8, HIGH);
   delay_read = throttleLevel(channel_3);
   if(channel_3<1100)
   {
@@ -38,14 +38,14 @@ void loop() {
   }
 
   // Rudder logic
-  channel_1 = pulseIn(4, HIGH);
+  channel_1 = pulseIn(7, HIGH);
   if(channel_1>1450 && channel_1<1540)
   {
     rudder_servo.write(15);
   } else {
     rudder_angle = rudderMove(channel_1);
     rudder_servo.write(rudder_angle);
-  }  
+  }
 }
 
 void flap(int delay_) {
@@ -75,7 +75,7 @@ void flap(int delay_) {
 
 int throttleLevel(double channel) {
   int throttle_l = 0;
-  throttle_l = map(channel, 1100, 2000, -5, -1); 
+  throttle_l = map(channel, 1100, 2000, -5, -1);
   return abs(throttle_l);
 }
 
@@ -84,4 +84,3 @@ int rudderMove(double channel) {
   r_angle = map(channel_1, 990, 1990, 0, 30);
   return r_angle;
 }
-
